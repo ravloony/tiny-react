@@ -26,27 +26,43 @@ var validNodes = [
     'span'
 ];
 
+function isValid(type) {
+    return validNodes.includes(type);
+}
 
 function buildTree(what) {
     return what.map(node => buildNode(node));
 }
 
 function buildNode(what) {
-    let [ nodeName, attributes, children ] = what;
-    let node = document.createElement(nodeName);
+    //console.log(JSON.stringify(what));
+    let { type, props = {}, children = [] } = what;
 
-    if (isString(children)) {
-        node.textContent = children;
+    let hasChildren = true;
+    let node;
+    if (type === '#text') {
+        hasChildren = false;
+        node = document.createTextNode(what.nodeValue);
+    } else if (isValid(type)) {
+        node = document.createElement(type);
+    } else {
+        throw `${type} is not a valid type or DOM element`;
     }
 
-    if (isArray(children)) {
+    //Handle props
+
+
+
+    //Handle children
+    if (hasChildren) {
 
         let childrenNodes = buildTree(children);
 
         childrenNodes.forEach(childNode => {
-            node.append(childNode);
+            node.appendChild(childNode);
         });
     }
+
     return node;
 }
 
@@ -55,7 +71,7 @@ function tiny(where, what) {
 
     let element = document.querySelector(where);
 
-    element.replaceWith(root);
+    element.appendChild(root);
 }
 
 export default tiny;
