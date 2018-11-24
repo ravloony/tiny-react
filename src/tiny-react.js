@@ -1,50 +1,21 @@
-import { isArray, isString } from './utils.js';
-
-function makeDomElement(tag) {
-    let element = document.createElement(tag);
-    return element;
-}
-
-var validNodes = [
-    'article',
-    'aside',
-    'blockquote',
-    'body',
-    'div',
-    'footer',
-    'h1',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'h6',
-    'header',
-    'main',
-    'nav',
-    'p',
-    'section',
-    'span'
-];
-
-function isValid(type) {
-    return validNodes.includes(type);
-}
+import { isArray, isString, isFunction, isElement } from './utils.js';
 
 function buildTree(what) {
-    return what.map(node => buildNode(node));
-}
-
-function buildNode(what) {
     //console.log(JSON.stringify(what));
     let { type, props = {}, children = [] } = what;
 
     let hasChildren = true;
     let node;
-    if (type === '#text') {
+    if (isString(type)) {
+        if (type === '#text') {
+            hasChildren = false;
+            node = document.createTextNode(what.nodeValue);
+        } else if (isElement(type)) {
+            node = document.createElement(type);
+        }
+    } else if (isFunction(type)) {
         hasChildren = false;
-        node = document.createTextNode(what.nodeValue);
-    } else if (isValid(type)) {
-        node = document.createElement(type);
+        node = buildTree(type(props));
     } else {
         throw `${type} is not a valid type or DOM element`;
     }
@@ -56,18 +27,18 @@ function buildNode(what) {
     //Handle children
     if (hasChildren) {
 
-        let childrenNodes = buildTree(children);
-
-        childrenNodes.forEach(childNode => {
-            node.appendChild(childNode);
-        });
+        children
+            .map(buildTree)
+            .forEach(childNode => {
+                node.appendChild(childNode);
+            });
     }
 
     return node;
 }
 
 function tiny(where, what) {
-    let root = buildNode(what);
+    let root = buildTree(what);
 
     let element = document.querySelector(where);
 

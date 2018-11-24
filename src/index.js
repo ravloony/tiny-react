@@ -1,5 +1,11 @@
 import tiny from './tiny-react';
 
+let Groot = props => ({
+    type: '#text',
+    props,
+    nodeValue: "I am Groot"
+});
+
 let tree = {
     type: 'div',
     props: {
@@ -19,6 +25,10 @@ let tree = {
                     nodeValue: "Hello world"
                 }
             ]
+        },
+        {
+            type: Groot,
+            props: { className: "groot" }
         }
     ]
 };
