@@ -1,4 +1,4 @@
-import { isArray, isString, isFunction, isElement } from './utils.js';
+import { isArray, isString, isFunction, isHTMLUnknownElement } from './utils.js';
 
 function buildTree(what) {
     //console.log(JSON.stringify(what));
@@ -10,14 +10,17 @@ function buildTree(what) {
         if (type === '#text') {
             hasChildren = false;
             node = document.createTextNode(what.nodeValue);
-        } else if (isElement(type)) {
+        } else {
             node = document.createElement(type);
+            if (isHTMLUnknownElement(node)) {
+                throw "HTML Element unknown";
+            }
         }
     } else if (isFunction(type)) {
         hasChildren = false;
         node = buildTree(type(props));
     } else {
-        throw `${type} is not a valid type or DOM element`;
+        throw 'Unsupported node type';
     }
 
     //Handle props

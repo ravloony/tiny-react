@@ -14,27 +14,6 @@ export function isFunction(o) {
     return isThing(o, 'Function');
 }
 
-var validNodes = [
-    'article',
-    'aside',
-    'blockquote',
-    'body',
-    'div',
-    'footer',
-    'h1',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'h6',
-    'header',
-    'main',
-    'nav',
-    'p',
-    'section',
-    'span'
-];
-
-export function isElement(type) {
-    return validNodes.includes(type);
+export function isHTMLUnknownElement(elem) {
+    return isThing(elem, 'HTMLUnknownElement');
 }
