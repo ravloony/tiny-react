@@ -1,4 +1,14 @@
-This is a toy clone of React, to keep my JS skills sharp.
+This is a toy clone of React, to keep my JS skills sharp. The TODO file lists the things I still need to implement to be anywhere near useful.
+
+
+To check it out:
+
+~~~
+npm install
+npx webpack
+~~~
+
+Then load `dist/index.html` in your favourite browser.
 
 Feel free to peruse, critique, and so on.
 

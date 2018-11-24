@@ -1,3 +1,4 @@
+- Handle props
 - Object components
 - Tree diffing
 - State handling
