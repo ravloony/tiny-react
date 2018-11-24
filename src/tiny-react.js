@@ -51,11 +51,11 @@ function buildNode(what) {
 }
 
 function tiny(where, what) {
-    let tree = buildTree(what);
+    let root = buildNode(what);
 
     let element = document.querySelector(where);
 
-    element.replaceWith(tree);
+    element.replaceWith(root);
 }
 
 export default tiny;
