@@ -17,3 +17,10 @@ export function isFunction(o) {
 export function isHTMLUnknownElement(elem) {
     return isThing(elem, 'HTMLUnknownElement');
 }
+
+export function camelCaseToKebabCase(str) {
+    return str.replace(
+        /./g,
+        c => (c === c.toUpperCase() && c !== c.toLowerCase()) ? `-${c.toLowerCase()}` : c
+    );
+}

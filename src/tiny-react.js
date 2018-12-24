@@ -1,4 +1,4 @@
-import { isArray, isString, isFunction, isHTMLUnknownElement } from './utils.js';
+import { isArray, isString, isFunction, isHTMLUnknownElement, camelCaseToKebabCase } from './utils.js';
 
 function buildTree(what) {
     //console.log(JSON.stringify(what));
@@ -25,6 +25,14 @@ function buildTree(what) {
 
     //Handle props
 
+    if (props.style) {
+        for (let [key, value] of Object.entries(props.style)) {
+            let cssKey = camelCaseToKebabCase(key);
+            if (node.style[cssKey] !== undefined) {
+                node.style[cssKey] = value;
+            }
+        }
+    }
 
 
     //Handle children
