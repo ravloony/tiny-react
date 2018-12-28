@@ -24,9 +24,10 @@ function buildTree(what) {
     }
 
     //Handle props
+    let { style, ...other } = props;
 
-    if (props.style) {
-        for (let [key, value] of Object.entries(props.style)) {
+    if (style) {
+        for (let [key, value] of Object.entries(style)) {
             let cssKey = camelCaseToKebabCase(key);
             if (node.style[cssKey] !== undefined) {
                 node.style[cssKey] = value;
@@ -34,6 +35,9 @@ function buildTree(what) {
         }
     }
 
+   for (let [key, value] of Object.entries(other)) {
+       node[key] = value;
+   }
 
     //Handle children
     if (hasChildren) {
