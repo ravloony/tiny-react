@@ -40,6 +40,8 @@ let tree = dom(
   ]
 );
 
+let initialState = {};
+
 console.log('got a tree');
 
-tiny('#app', tree);
+tiny('#app', tree, initialState);

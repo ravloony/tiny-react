@@ -1,4 +1,5 @@
 import { dom } from './tiny-react'
+import { connect } from './state';
 
 const DummyComponent = props => <div className="dummy">{props.children}</div>
-export default DummyComponent
+export default connect()(DummyComponent)

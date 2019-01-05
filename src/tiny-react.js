@@ -1,5 +1,6 @@
 import { isArray, isString, isFunction, isHTMLUnknownElement, camelCaseToKebabCase } from './utils.js';
 import { debug, error, group, groupEnd, log } from './log.js';
+import { initializeState } from './state';
 
 export function dom(type, props, children = null) {
   group();
@@ -65,7 +66,9 @@ export function dom(type, props, children = null) {
   return node;
 }
 
-function tiny(where, what) {
+function tiny(where, what, state) {
+  initializeState(state);
+
   let element = document.querySelector(where);
 
   element.appendChild(what);
