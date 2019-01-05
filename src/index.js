@@ -1,36 +1,45 @@
-import tiny from './tiny-react';
+import tiny, { dom } from './tiny-react';
+import dummy from './dummy.js';
 
-let Groot = props => ({
-    type: '#text',
-    props,
-    nodeValue: "I am Groot"
-});
+let Groot = props => dom(
+  '#text',
+  props,
+  "I am Groot"
+);
 
-let tree = {
-    type: 'div',
-    props: {
-        className: 'app-root',
-        style: { backgroundColor: "blue" }
-    },
-    children: [
-        {
-            type: 'p',
-            props: {
-                className: 'app-para',
-                style: { backgroundColor: "red" }
-            },
-            children: [
-                {
-                    type: '#text',
-                    nodeValue: "Hello world"
-                }
-            ]
-        },
-        {
-            type: Groot,
-            props: { className: "groot" }
-        }
-    ]
-};
+let tree = dom(
+  'div',
+  {
+    className: 'app-root',
+    style: { backgroundColor: "blue" }
+  },
+  [
+    dom(
+      'p',
+      {
+        className: 'app-para',
+        style: { backgroundColor: "red" }
+      },
+      [
+        dom(
+          '#text',
+          null,
+          "Hello world"
+        )
+      ]
+    ),
+    dom(
+      Groot,
+      { className: "groot" }
+    ),
+    dom(
+      dummy,
+      {},
+      'wwat'
+    )
+  ]
+);
+
+console.log('got a tree');
 
 tiny('#app', tree);
